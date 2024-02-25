@@ -4,6 +4,12 @@ use crate::state::player_data::PlayerData;
 use anchor_lang::prelude::*;
 use session_keys::{Session, SessionToken};
 
+pub fn submit_response(mut ctx: Context<ChopTree>, response: String) -> Result<()> {
+    let account: &mut &mut ChopTree<'_> = &mut ctx.accounts;
+    account.game_data.set_response(response);
+    Ok(())
+}
+
 pub fn chop_tree(mut ctx: Context<ChopTree>, counter: u16, amount: u64, tree_idx: u64) -> Result<()> {
     let account: &mut &mut ChopTree<'_> = &mut ctx.accounts;
     account.player.update_energy()?;

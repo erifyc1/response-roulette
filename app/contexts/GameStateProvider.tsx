@@ -16,13 +16,15 @@ const GameStateContext = createContext<{
   gameState: PlayerData | null
   nextEnergyIn: number
   votes: BN[] | null
-  promptIdx: number
+  promptIdx: number,
+  responses: String[]
 }>({
   playerDataPDA: null,
   gameState: null,
   nextEnergyIn: 0,
   votes: [new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)],
-  promptIdx: 0
+  promptIdx: 0, 
+  responses: ["", "", "", "", "", "", "", "", "", ""]
 })
 
 export const useGameState = () => useContext(GameStateContext)
@@ -43,7 +45,7 @@ export const GameStateProvider = ({
   const [gameData, setGameData] = useState<GameData | null>(null)
   const [votes, setVotes] = useState<BN[] | null>([new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)])
   const [promptIdx, setPromptIdx] = useState<number>(0);
-
+  const [responses, setResponses] = useState<String[]>(["", "", "", "", "", "", "", "", "", ""])
   useEffect(() => {
     setPlayerState(null)
     if (!publicKey) {
@@ -96,6 +98,7 @@ export const GameStateProvider = ({
       setGameData(newGameData);
       setVotes(newGameData.votes);
       setPromptIdx(newGameData.promptIdx);
+      setResponses(newGameData.responses);
     })
   }, [publicKey])
 
@@ -137,6 +140,7 @@ export const GameStateProvider = ({
         nextEnergyIn,
         votes,
         promptIdx,
+        responses
       }}
     >
       {children}

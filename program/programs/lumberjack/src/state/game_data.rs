@@ -5,10 +5,16 @@ use crate::constants::MAX_WOOD_PER_TREE;
 #[account]
 pub struct GameData {
     pub votes: [u64; 10],
-    pub prompt_idx: u8
+    pub prompt_idx: u8, 
+    pub responses: [String; 10]
 }
 
 impl GameData {
+    pub fn set_response(&mut self, response: String) -> Result<()> {
+        self.responses[0] = response;
+        self.prompt_idx = (self.prompt_idx + 1 ) % 10;
+        Ok(())
+    }
     pub fn on_tree_chopped(&mut self, amount_chopped: u64, tree_idx: u64) -> Result<()> {
         match self.votes[tree_idx as usize].checked_add(amount_chopped) {
             Some(v) => {

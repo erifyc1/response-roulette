@@ -77,6 +77,47 @@ export type Lumberjack = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "submitResponse",
+      "accounts": [
+        {
+          "name": "sessionToken",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "response",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -97,6 +138,15 @@ export type Lumberjack = {
           {
             "name": "promptIdx",
             "type": "u8"
+          },
+          {
+            "name": "responses",
+            "type": {
+              "array": [
+                "string",
+                10
+              ]
+            }
           }
         ]
       }
@@ -155,7 +205,7 @@ export type Lumberjack = {
     }
   ],
   "metadata": {
-    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
+    "address": "6XvmJxX7JpaLpJwJ7qPGoXPyb2Jz3RiBMf9Go2DpWw2G"
   }
 };
 
@@ -238,6 +288,47 @@ export const IDL: Lumberjack = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "submitResponse",
+      "accounts": [
+        {
+          "name": "sessionToken",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        },
+        {
+          "name": "response",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -258,6 +349,15 @@ export const IDL: Lumberjack = {
           {
             "name": "promptIdx",
             "type": "u8"
+          },
+          {
+            "name": "responses",
+            "type": {
+              "array": [
+                "string",
+                10
+              ]
+            }
           }
         ]
       }
@@ -316,6 +416,6 @@ export const IDL: Lumberjack = {
     }
   ],
   "metadata": {
-    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
+    "address": "6XvmJxX7JpaLpJwJ7qPGoXPyb2Jz3RiBMf9Go2DpWw2G"
   }
 };

@@ -5,6 +5,7 @@ import SessionKeyButton from "@/components/SessionKeyButton"
 import InitPlayerButton from "@/components/InitPlayerButton"
 import ChopTreeButton from "@/components/ChopTreeButton"
 import RequestAirdrop from "@/components/RequestAirdrop"
+import InputResponse from "@/components/Response"
 import { BN } from "@coral-xyz/anchor"
 import DisplayGameState from "@/components/DisplayGameState"
 // import DisplayNfts from "@/components/DisplayNfts"
@@ -27,6 +28,7 @@ export default function Home() {
       <VStack>
       <Heading>Response Roulette</Heading>
         <Text>Some stuff here</Text>
+        <InputResponse/>
         <Text>Some stuff here</Text>
 
         <DisplayGameState />

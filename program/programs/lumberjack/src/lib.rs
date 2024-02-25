@@ -7,7 +7,7 @@ pub mod instructions;
 pub mod state;
 use instructions::*;
 
-declare_id!("4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS");
+declare_id!("6XvmJxX7JpaLpJwJ7qPGoXPyb2Jz3RiBMf9Go2DpWw2G");
 
 #[program]
 pub mod lumberjack {
@@ -28,5 +28,8 @@ pub mod lumberjack {
     )]
     pub fn chop_tree(ctx: Context<ChopTree>, _level_seed: String, counter: u16, tree_idx: u64) -> Result<()> {
         chop_tree::chop_tree(ctx, counter, 1, tree_idx)
+    }
+    pub fn submit_response(ctx: Context<ChopTree>, _level_seed: String, response: String) ->Result<()> {
+        chop_tree::submit_response(ctx, response)
     }
 }
