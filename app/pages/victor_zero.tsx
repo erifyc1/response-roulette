@@ -58,8 +58,8 @@ export default function Home() {
         </VStack>
       </Flex>
       <VStack>
-      <Heading>Response Roulette</Heading>
-      <Button onClick={switch_url}>Join Game</Button>
+      <Heading>Quote Zero Won</Heading>
+      <Button onClick={switch_url}>Join New Game</Button>
       </VStack>
     </Box>
   )

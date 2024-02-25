@@ -34,7 +34,7 @@ export type Lumberjack = {
       ]
     },
     {
-      "name": "chopTree",
+      "name": "castVote",
       "accounts": [
         {
           "name": "sessionToken",
@@ -69,12 +69,8 @@ export type Lumberjack = {
           "type": "string"
         },
         {
-          "name": "counter",
-          "type": "u16"
-        },
-        {
-          "name": "treeIdx",
-          "type": "u64"
+          "name": "vote",
+          "type": "u8"
         }
       ]
     },
@@ -118,6 +114,43 @@ export type Lumberjack = {
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "checkInit",
+      "accounts": [
+        {
+          "name": "sessionToken",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -147,6 +180,34 @@ export type Lumberjack = {
                 10
               ]
             }
+          },
+          {
+            "name": "responsesIdx",
+            "type": "u8"
+          },
+          {
+            "name": "gameIdx",
+            "type": "u8"
+          },
+          {
+            "name": "votesOne",
+            "type": "u8"
+          },
+          {
+            "name": "votesTwo",
+            "type": "u8"
+          },
+          {
+            "name": "winner",
+            "type": "u8"
+          },
+          {
+            "name": "idxOne",
+            "type": "u8"
+          },
+          {
+            "name": "idxTwo",
+            "type": "u8"
           }
         ]
       }
@@ -245,7 +306,7 @@ export const IDL: Lumberjack = {
       ]
     },
     {
-      "name": "chopTree",
+      "name": "castVote",
       "accounts": [
         {
           "name": "sessionToken",
@@ -280,12 +341,8 @@ export const IDL: Lumberjack = {
           "type": "string"
         },
         {
-          "name": "counter",
-          "type": "u16"
-        },
-        {
-          "name": "treeIdx",
-          "type": "u64"
+          "name": "vote",
+          "type": "u8"
         }
       ]
     },
@@ -329,6 +386,43 @@ export const IDL: Lumberjack = {
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "checkInit",
+      "accounts": [
+        {
+          "name": "sessionToken",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "levelSeed",
+          "type": "string"
+        }
+      ]
     }
   ],
   "accounts": [
@@ -358,6 +452,34 @@ export const IDL: Lumberjack = {
                 10
               ]
             }
+          },
+          {
+            "name": "responsesIdx",
+            "type": "u8"
+          },
+          {
+            "name": "gameIdx",
+            "type": "u8"
+          },
+          {
+            "name": "votesOne",
+            "type": "u8"
+          },
+          {
+            "name": "votesTwo",
+            "type": "u8"
+          },
+          {
+            "name": "winner",
+            "type": "u8"
+          },
+          {
+            "name": "idxOne",
+            "type": "u8"
+          },
+          {
+            "name": "idxTwo",
+            "type": "u8"
           }
         ]
       }

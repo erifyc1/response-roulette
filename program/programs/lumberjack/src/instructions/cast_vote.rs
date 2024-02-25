@@ -4,36 +4,26 @@ use crate::state::player_data::PlayerData;
 use anchor_lang::prelude::*;
 use session_keys::{Session, SessionToken};
 
-pub fn submit_response(mut ctx: Context<ChopTree>, response: String) -> Result<()> {
-    let account: &mut &mut ChopTree<'_> = &mut ctx.accounts;
+pub fn submit_response(mut ctx: Context<CastVote>, response: String) -> Result<()> {
+    let account: &mut &mut CastVote<'_> = &mut ctx.accounts;
     account.game_data.set_response(response);
     Ok(())
 }
+pub fn check_init(mut ctx: Context<CastVote>) -> Result<()> {
+    let account: &mut &mut CastVote<'_> = &mut ctx.accounts;
+    account.game_data.check_init();
+    Ok(())
+}
 
-pub fn chop_tree(mut ctx: Context<ChopTree>, counter: u16, amount: u64, tree_idx: u64) -> Result<()> {
-    let account: &mut &mut ChopTree<'_> = &mut ctx.accounts;
-    account.player.update_energy()?;
-    account.player.print()?;
-
-    if account.player.energy < amount {
-        return err!(GameErrorCode::NotEnoughEnergy);
-    }
-
-    account.player.last_id = counter;
-    account.player.chop_tree(amount)?;
-    account.game_data.on_tree_chopped(amount, tree_idx)?;
-
-    msg!(
-        "You chopped a tree and got 1 wood. You have {} wood and {} energy left.",
-        ctx.accounts.player.wood,
-        ctx.accounts.player.energy
-    );
+pub fn cast_vote(mut ctx: Context<CastVote>, vote: u8) -> Result<()> {
+    let account: &mut &mut CastVote<'_> = &mut ctx.accounts;
+    account.game_data.cast_vote(vote);
     Ok(())
 }
 
 #[derive(Accounts, Session)]
 #[instruction(level_seed: String)]
-pub struct ChopTree<'info> {
+pub struct CastVote<'info> {
     #[session(
         // The ephemeral key pair signing the transaction
         signer = signer,

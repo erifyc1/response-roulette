@@ -17,14 +17,28 @@ const GameStateContext = createContext<{
   nextEnergyIn: number
   votes: BN[] | null
   promptIdx: number,
-  responses: String[]
+  responses: String[],
+  responsesIdx: number,
+  gameIdx: number,
+  votesOne: number, 
+  votesTwo: number, 
+  winner: number,
+  idxOne: number,
+  idxTwo: number
 }>({
   playerDataPDA: null,
   gameState: null,
   nextEnergyIn: 0,
   votes: [new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)],
   promptIdx: 0, 
-  responses: ["", "", "", "", "", "", "", "", "", ""]
+  responses: ["", "", "", "", "", "", "", "", "", ""],
+  responsesIdx: 0,
+  gameIdx: 0, 
+  votesOne: 0, 
+  votesTwo: 0,
+  winner: 0,
+  idxOne: 0,
+  idxTwo: 0
 })
 
 export const useGameState = () => useContext(GameStateContext)
@@ -45,7 +59,14 @@ export const GameStateProvider = ({
   const [gameData, setGameData] = useState<GameData | null>(null)
   const [votes, setVotes] = useState<BN[] | null>([new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)])
   const [promptIdx, setPromptIdx] = useState<number>(0);
-  const [responses, setResponses] = useState<String[]>(["", "", "", "", "", "", "", "", "", ""])
+  const [responses, setResponses] = useState<String[]>(["", "", "", "", "", "", "", "", "", ""]);
+  const [responsesIdx, setResponsesIdx] = useState<number>(0);
+  const [gameIdx, setGameIdx] = useState<number>(0);
+  const [votesOne, setVotesOne] = useState<number>(0);
+  const [votesTwo, setVotesTwo] = useState<number>(0);
+  const [winner, setWinner] = useState<number>(0);
+  const [idxOne, setIdxOne] = useState<number>(0);
+  const [idxTwo, setIdxTwo] = useState<number>(0);
   useEffect(() => {
     setPlayerState(null)
     if (!publicKey) {
@@ -84,21 +105,62 @@ export const GameStateProvider = ({
 
     program.account.gameData
       .fetch(pda)
-      .then((data) => {
+      .then(async (data) => {
+        const prev_game_data = data.gameIdx;
         setGameData(data);
         setVotes(data.votes);
         setPromptIdx(data.promptIdx);
+        setResponses(data.responses);
+        setResponsesIdx(data.responsesIdx);
+        setGameIdx(data.gameIdx);
+        setVotesOne(data.votesOne);
+        setVotesTwo(data.votesTwo);
+        setWinner(data.winner);
+        setIdxOne(data.idxOne);
+        setIdxTwo(data.idxTwo);
+        /**if (data.gameIdx == 3) {
+          if (data.winner == 0) {
+            window.location.replace('http://localhost:3000/victor_zero');
+          } else {
+            window.location.replace('http://localhost:3000/victor_one');
+          }
+        }*/
+        if (data.gameIdx == 2 && prev_game_data != 2) {
+          window.location.replace('http://localhost:3000/votes');
+        } else {
+          console.log(data.gameIdx);
+        }
       })
       .catch((error) => {
         window.alert("No game data found, please init!")
       })
 
-    connection.onAccountChange(pda, (account) => {
-      const newGameData = program.coder.accounts.decode("gameData", account.data)
+    connection.onAccountChange(pda, async (account) => {
+      const newGameData = program.coder.accounts.decode("gameData", account.data);
+      const prev_game_data = newGameData.gameIdx;
       setGameData(newGameData);
       setVotes(newGameData.votes);
       setPromptIdx(newGameData.promptIdx);
       setResponses(newGameData.responses);
+      setGameIdx(newGameData.gameIdx);
+      setResponsesIdx(newGameData.responsesIdx);
+      setVotesOne(newGameData.votesOne);
+      setVotesTwo(newGameData.votesTwo);
+      setWinner(newGameData.winner);
+      setIdxOne(newGameData.idxOne);
+        setIdxTwo(newGameData.idxTwo);
+      /**if (newGameData.gameIdx == 3) {
+        if (newGameData.winner == 0) {
+          window.location.replace('http://localhost:3000/victor_zero');
+        } else {
+          window.location.replace('http://localhost:3000/victor_one');
+        }
+      }*/
+      if (newGameData.gameIdx == 2 && prev_game_data != 2) {
+        window.location.replace('http://localhost:3000/votes');
+      } else {
+        console.log(newGameData.gameIdx);
+      }
     })
   }, [publicKey])
 
@@ -140,7 +202,14 @@ export const GameStateProvider = ({
         nextEnergyIn,
         votes,
         promptIdx,
-        responses
+        responses,
+        responsesIdx,
+        gameIdx, 
+        votesOne,
+        votesTwo,
+        winner,
+        idxOne, 
+        idxTwo
       }}
     >
       {children}

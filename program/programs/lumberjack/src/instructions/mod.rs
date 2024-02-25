@@ -1,6 +1,6 @@
 //! All instructions
-pub mod chop_tree;
+pub mod cast_vote;
 pub mod init_player;
 
-pub use chop_tree::*;
+pub use cast_vote::*;
 pub use init_player::*;

@@ -26,10 +26,15 @@ pub mod lumberjack {
         ctx.accounts.player.authority.key() == ctx.accounts.signer.key(),
         GameErrorCode::WrongAuthority
     )]
-    pub fn chop_tree(ctx: Context<ChopTree>, _level_seed: String, counter: u16, tree_idx: u64) -> Result<()> {
-        chop_tree::chop_tree(ctx, counter, 1, tree_idx)
+    pub fn cast_vote(ctx: Context<CastVote>, _level_seed: String, vote: u8) -> Result<()> {
+        cast_vote::cast_vote(ctx, vote)
     }
-    pub fn submit_response(ctx: Context<ChopTree>, _level_seed: String, response: String) ->Result<()> {
-        chop_tree::submit_response(ctx, response)
+    pub fn submit_response(ctx: Context<CastVote>, _level_seed: String, response: String) ->Result<()> {
+        cast_vote::submit_response(ctx, response)
     }
+    pub fn check_init(ctx: Context<CastVote>, _level_seed: String) -> Result<()> {
+        cast_vote::check_init(ctx)
+    }
+    
+    
 }

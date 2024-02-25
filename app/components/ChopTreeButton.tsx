@@ -8,14 +8,14 @@ import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor"
 import { BN } from "@coral-xyz/anchor"
 
 export interface UserProps {
-  tree_idx: BN
+  vote_idx: BN
 }
 
-const ChopTreeButton = ({tree_idx} : UserProps) => {
+const ChopTreeButton = ({vote_idx} : UserProps) => {
   const { publicKey, sendTransaction } = useWallet()
   const { connection } = useConnection()
   const sessionWallet = useSessionWallet()
-  const { gameState, playerDataPDA, votes } = useGameState()
+  const { gameState, playerDataPDA, votes, votesOne, votesTwo, responses, idxOne, idxTwo } = useGameState()
   const [isLoadingSession, setIsLoadingSession] = useState(false)
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false)
   const [transactionCounter, setTransactionCounter] = useState(0)
@@ -27,7 +27,7 @@ const ChopTreeButton = ({tree_idx} : UserProps) => {
 
     try {
       const transaction = await program.methods
-        .chopTree(GAME_DATA_SEED, transactionCounter, tree_idx)
+        .castVote(GAME_DATA_SEED, vote_idx)
         .accounts({
           player: playerDataPDA,
           gameData: gameDataPDA,
@@ -50,42 +50,18 @@ const ChopTreeButton = ({tree_idx} : UserProps) => {
     }
   }, [sessionWallet])
 
-  const onChopMainWalletClick = useCallback(async () => {
-    if (!publicKey || !playerDataPDA) return
-
-    setIsLoadingMainWallet(true)
-
-    try {
-      const transaction = await program.methods
-        .chopTree(GAME_DATA_SEED, transactionCounter, tree_idx)
-        .accounts({
-          player: playerDataPDA,
-          gameData: gameDataPDA,
-          signer: publicKey,
-          sessionToken: null,
-        })
-        .transaction()
-
-      const txSig = await sendTransaction(transaction, connection, {
-        skipPreflight: true,
-      })
-      console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`)
-    } catch (error: any) {
-      console.log("error", `Chopping failed! ${error?.message}`)
-    } finally {
-      setIsLoadingMainWallet(false)
-    }
-  }, [publicKey, playerDataPDA, connection])
+  
 
   return (
     <>
       {publicKey && gameState && (
         <VStack>
-          {Number(tree_idx)}
+          {Number(vote_idx)}
           {/* <Image src="/Beaver.png" alt="" width={16} height={16} /> */}
           <VStack>
+            <Text> {Number(vote_idx) == 0 ? responses[idxOne] : responses[idxTwo]} </Text>
             <HStack>
-              {Number(tree_idx) == 0 && sessionWallet && sessionWallet.sessionToken != null && (
+              {Number(vote_idx) == 0 && sessionWallet && sessionWallet.sessionToken != null && (
                 <Button
                 isLoading={isLoadingSession}
                 onClick={onChopClick}
@@ -94,10 +70,10 @@ const ChopTreeButton = ({tree_idx} : UserProps) => {
                 fontSize="9xl"
                 backgroundColor="indianred"
                 >
-                {Number(tree_idx) == 0 ? 'A' : 'B'}
+                {Number(vote_idx) == 0 ? 'A' : 'B'}
                 </Button>
               )}
-              {Number(tree_idx) == 1 && sessionWallet && sessionWallet.sessionToken != null && (
+              {Number(vote_idx) == 1 && sessionWallet && sessionWallet.sessionToken != null && (
                 <Button
                 isLoading={isLoadingSession}
                 onClick={onChopClick}
@@ -106,12 +82,12 @@ const ChopTreeButton = ({tree_idx} : UserProps) => {
                 fontSize="9xl"
                 backgroundColor="deepskyblue"
                 >
-                {Number(tree_idx) == 0 ? 'A' : 'B'}
+                {Number(vote_idx) == 0 ? 'A' : 'B'}
                 </Button>
               )}
 
             </HStack>
-            <Text fontSize="larger">{Number(votes![Number(tree_idx)])} Votes</Text>
+            <Text fontSize="larger"> {Number(vote_idx) == 0 ? votesOne : votesTwo} Votes</Text>
           </VStack>
         </VStack>
       )}

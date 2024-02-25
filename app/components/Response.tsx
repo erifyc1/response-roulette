@@ -7,13 +7,13 @@ import { useGameState } from "@/contexts/GameStateProvider"
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor"
 import { BN } from "@coral-xyz/anchor"
 import { Text, Input } from "@chakra-ui/react"
-
+import DisplayPlayerData from "./DisplayGameState"
 
 const InputResponse = () => {
   const { publicKey, sendTransaction } = useWallet()
   const { connection } = useConnection()
   const sessionWallet = useSessionWallet()
-  const { gameState, playerDataPDA, responses } = useGameState()
+  const { gameState, playerDataPDA, responses, responsesIdx } = useGameState()
   const [isLoadingSession, setIsLoadingSession] = useState(false)
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false)
   const [transactionCounter, setTransactionCounter] = useState(0)
@@ -58,7 +58,9 @@ const InputResponse = () => {
       {publicKey && gameState && (
         <VStack>
           <Text> The Prompt is: </Text>
-          <Input
+          <DisplayPlayerData/>
+         <Text> Enter your response below: </Text>
+         <Input
             type="text"
             value={response}
             onChange={e => setResponse(e.target.value)}
@@ -74,7 +76,6 @@ const InputResponse = () => {
               </Button>
             )}
           </HStack>
-          <Text> Response Zero: {responses[0]} </Text>
         </VStack>
       )}
     </>

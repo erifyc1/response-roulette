@@ -50,23 +50,7 @@ impl PlayerData {
         Ok(())
     }
 
-    pub fn chop_tree(&mut self, amount: u64) -> Result<()> {
-        match self.wood.checked_add(amount) {
-            Some(v) => {
-                self.wood = v;
-            }
-            None => {
-                msg!("Total wood reached!");
-            }
-        };
-        match self.energy.checked_sub(amount) {
-            Some(v) => {
-                self.energy = v;
-            }
-            None => {
-                self.energy = 0;
-            }
-        };
+    pub fn cast_vote(&mut self, amount: u64) -> Result<()> {
         Ok(())
     }
 }
