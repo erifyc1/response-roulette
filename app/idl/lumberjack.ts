@@ -73,6 +73,143 @@ export type Lumberjack = {
           "type": "u16"
         }
       ]
+    },
+    {
+      "name": "createElection",
+      "accounts": [
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "winners",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "apply",
+      "accounts": [
+        {
+          "name": "candidateIdentity",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "register",
+      "accounts": [
+        {
+          "name": "candidateData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "electionData",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "candidateIdentity",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "changeStage",
+      "accounts": [
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newStage",
+          "type": {
+            "defined": "ElectionStage"
+          }
+        }
+      ]
+    },
+    {
+      "name": "vote",
+      "accounts": [
+        {
+          "name": "myVote",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "candidateData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -127,6 +264,137 @@ export type Lumberjack = {
           }
         ]
       }
+    },
+    {
+      "name": "ElectionData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "candidates",
+            "type": "u64"
+          },
+          {
+            "name": "stage",
+            "type": {
+              "defined": "ElectionStage"
+            }
+          },
+          {
+            "name": "initiator",
+            "type": "publicKey"
+          },
+          {
+            "name": "winnersNum",
+            "type": "u8"
+          },
+          {
+            "name": "winnersId",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "winnersVotes",
+            "type": {
+              "vec": "u64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CandidateData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "votes",
+            "type": "u64"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "pubkey",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CandidateIdentity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "pubkey",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MyVote",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ElectionStage",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Application"
+          },
+          {
+            "name": "Voting"
+          },
+          {
+            "name": "Closed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ElectionError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "WinnerCountNotAllowed"
+          },
+          {
+            "name": "ApplicationIsClosed"
+          },
+          {
+            "name": "WrongPublicKey"
+          },
+          {
+            "name": "PrivilegeNotAllowed"
+          },
+          {
+            "name": "ElectionIsClosed"
+          },
+          {
+            "name": "NotAtVotingStage"
+          }
+        ]
+      }
     }
   ],
   "errors": [
@@ -140,7 +408,10 @@ export type Lumberjack = {
       "name": "WrongAuthority",
       "msg": "Wrong Authority"
     }
-  ]
+  ],
+  "metadata": {
+    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
+  }
 };
 
 export const IDL: Lumberjack = {
@@ -218,6 +489,143 @@ export const IDL: Lumberjack = {
           "type": "u16"
         }
       ]
+    },
+    {
+      "name": "createElection",
+      "accounts": [
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "winners",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "apply",
+      "accounts": [
+        {
+          "name": "candidateIdentity",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "register",
+      "accounts": [
+        {
+          "name": "candidateData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "electionData",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "candidateIdentity",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "changeStage",
+      "accounts": [
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newStage",
+          "type": {
+            "defined": "ElectionStage"
+          }
+        }
+      ]
+    },
+    {
+      "name": "vote",
+      "accounts": [
+        {
+          "name": "myVote",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "candidateData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "electionData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -272,6 +680,137 @@ export const IDL: Lumberjack = {
           }
         ]
       }
+    },
+    {
+      "name": "ElectionData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "candidates",
+            "type": "u64"
+          },
+          {
+            "name": "stage",
+            "type": {
+              "defined": "ElectionStage"
+            }
+          },
+          {
+            "name": "initiator",
+            "type": "publicKey"
+          },
+          {
+            "name": "winnersNum",
+            "type": "u8"
+          },
+          {
+            "name": "winnersId",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "winnersVotes",
+            "type": {
+              "vec": "u64"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CandidateData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "votes",
+            "type": "u64"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "pubkey",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CandidateIdentity",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "pubkey",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MyVote",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ElectionStage",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Application"
+          },
+          {
+            "name": "Voting"
+          },
+          {
+            "name": "Closed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ElectionError",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "WinnerCountNotAllowed"
+          },
+          {
+            "name": "ApplicationIsClosed"
+          },
+          {
+            "name": "WrongPublicKey"
+          },
+          {
+            "name": "PrivilegeNotAllowed"
+          },
+          {
+            "name": "ElectionIsClosed"
+          },
+          {
+            "name": "NotAtVotingStage"
+          }
+        ]
+      }
     }
   ],
   "errors": [
@@ -285,5 +824,8 @@ export const IDL: Lumberjack = {
       "name": "WrongAuthority",
       "msg": "Wrong Authority"
     }
-  ]
+  ],
+  "metadata": {
+    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
+  }
 };
