@@ -5,8 +5,13 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import { useSessionWallet } from "@magicblock-labs/gum-react-sdk"
 import { useGameState } from "@/contexts/GameStateProvider"
 import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor"
+import { BN } from "@coral-xyz/anchor"
 
-const ChopTreeButton = () => {
+export interface UserProps {
+  tree_idx: BN
+}
+
+const ChopTreeButton = ({tree_idx} : UserProps) => {
   const { publicKey, sendTransaction } = useWallet()
   const { connection } = useConnection()
   const sessionWallet = useSessionWallet()
@@ -14,7 +19,7 @@ const ChopTreeButton = () => {
   const [isLoadingSession, setIsLoadingSession] = useState(false)
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false)
   const [transactionCounter, setTransactionCounter] = useState(0)
-
+  
   const onChopClick = useCallback(async () => {
     setIsLoadingSession(true)
     if (!playerDataPDA || !sessionWallet) return
@@ -22,7 +27,7 @@ const ChopTreeButton = () => {
 
     try {
       const transaction = await program.methods
-        .chopTree(GAME_DATA_SEED, transactionCounter)
+        .chopTree(GAME_DATA_SEED, transactionCounter, tree_idx)
         .accounts({
           player: playerDataPDA,
           gameData: gameDataPDA,
@@ -52,7 +57,7 @@ const ChopTreeButton = () => {
 
     try {
       const transaction = await program.methods
-        .chopTree(GAME_DATA_SEED, transactionCounter)
+        .chopTree(GAME_DATA_SEED, transactionCounter, tree_idx)
         .accounts({
           player: playerDataPDA,
           gameData: gameDataPDA,
@@ -76,7 +81,8 @@ const ChopTreeButton = () => {
     <>
       {publicKey && gameState && (
         <VStack>
-          <Image src="/Beaver.png" alt="Energy Icon" width={64} height={64} />
+          {Number(tree_idx)}
+          <Image src="/Beaver.png" alt="Energy Icon" width={16} height={16} />
           <HStack>
             {sessionWallet && sessionWallet.sessionToken != null && (
               <Button

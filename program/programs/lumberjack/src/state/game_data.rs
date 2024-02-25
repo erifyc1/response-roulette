@@ -4,18 +4,18 @@ use crate::constants::MAX_WOOD_PER_TREE;
 
 #[account]
 pub struct GameData {
-    pub total_wood_collected: u64,
+    pub votes: [u64; 10]
 }
 
 impl GameData {
-    pub fn on_tree_chopped(&mut self, amount_chopped: u64) -> Result<()> {
-        match self.total_wood_collected.checked_add(amount_chopped) {
+    pub fn on_tree_chopped(&mut self, amount_chopped: u64, tree_idx: u64) -> Result<()> {
+        match self.votes[tree_idx as usize].checked_add(amount_chopped) {
             Some(v) => {
-                if self.total_wood_collected >= MAX_WOOD_PER_TREE {
-                    self.total_wood_collected = 0;
+                if self.votes[tree_idx as usize] >= MAX_WOOD_PER_TREE {
+                    self.votes[tree_idx as usize] = 0;
                     msg!("Tree successfully chopped. New Tree coming up.");
                 } else {
-                    self.total_wood_collected = v;
+                    self.votes[tree_idx as usize] = v;
                     msg!("Total wood chopped: {}", v);
                 }
             }

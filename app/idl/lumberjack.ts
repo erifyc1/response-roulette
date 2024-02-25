@@ -71,6 +71,10 @@ export type Lumberjack = {
         {
           "name": "counter",
           "type": "u16"
+        },
+        {
+          "name": "treeIdx",
+          "type": "u64"
         }
       ]
     }
@@ -82,8 +86,13 @@ export type Lumberjack = {
         "kind": "struct",
         "fields": [
           {
-            "name": "totalWoodCollected",
-            "type": "u64"
+            "name": "votes",
+            "type": {
+              "array": [
+                "u64",
+                10
+              ]
+            }
           }
         ]
       }
@@ -140,7 +149,10 @@ export type Lumberjack = {
       "name": "WrongAuthority",
       "msg": "Wrong Authority"
     }
-  ]
+  ],
+  "metadata": {
+    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
+  }
 };
 
 export const IDL: Lumberjack = {
@@ -216,6 +228,10 @@ export const IDL: Lumberjack = {
         {
           "name": "counter",
           "type": "u16"
+        },
+        {
+          "name": "treeIdx",
+          "type": "u64"
         }
       ]
     }
@@ -227,8 +243,13 @@ export const IDL: Lumberjack = {
         "kind": "struct",
         "fields": [
           {
-            "name": "totalWoodCollected",
-            "type": "u64"
+            "name": "votes",
+            "type": {
+              "array": [
+                "u64",
+                10
+              ]
+            }
           }
         ]
       }
@@ -285,5 +306,8 @@ export const IDL: Lumberjack = {
       "name": "WrongAuthority",
       "msg": "Wrong Authority"
     }
-  ]
-}
+  ],
+  "metadata": {
+    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
+  }
+};

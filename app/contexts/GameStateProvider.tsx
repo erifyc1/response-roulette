@@ -15,12 +15,12 @@ const GameStateContext = createContext<{
   playerDataPDA: PublicKey | null  
   gameState: PlayerData | null
   nextEnergyIn: number
-  totalWoodAvailable: number | null
+  votes: BN[] | null
 }>({
   playerDataPDA: null,
   gameState: null,
   nextEnergyIn: 0,
-  totalWoodAvailable: 0
+  votes: [new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)]
 })
 
 export const useGameState = () => useContext(GameStateContext)
@@ -39,7 +39,7 @@ export const GameStateProvider = ({
   const [nextEnergyIn, setEnergyNextIn] = useState<number>(0)
   const [gameDataPDA, setGameDataPDA] = useState<PublicKey | null>(null)
   const [gameData, setGameData] = useState<GameData | null>(null)
-  const [totalWoodAvailable, setTotalWoodAvailable] = useState<number | null>(0)
+  const [votes, setVotes] = useState<BN[] | null>([new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)])
 
   useEffect(() => {
     setPlayerState(null)
@@ -81,7 +81,7 @@ export const GameStateProvider = ({
       .fetch(pda)
       .then((data) => {
         setGameData(data)
-        setTotalWoodAvailable(data.totalWoodCollected.toNumber());
+        setVotes(data.votes);
       })
       .catch((error) => {
         window.alert("No game data found, please init!")
@@ -90,7 +90,7 @@ export const GameStateProvider = ({
     connection.onAccountChange(pda, (account) => {
       const newGameData = program.coder.accounts.decode("gameData", account.data)
       setGameData(newGameData);
-      setTotalWoodAvailable(newGameData.totalWoodCollected.toNumber());
+      setVotes(newGameData.votes);
     })
   }, [publicKey])
 
@@ -130,7 +130,7 @@ export const GameStateProvider = ({
         playerDataPDA,
         gameState: playerState,
         nextEnergyIn,
-        totalWoodAvailable,
+        votes,
       }}
     >
       {children}

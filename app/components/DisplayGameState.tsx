@@ -6,7 +6,7 @@ import { TOTAL_WOOD_AVAILABLE } from "@/utils/anchor"
 
 const DisplayPlayerData = () => {
   const { publicKey } = useWallet()
-  const { gameState, nextEnergyIn, totalWoodAvailable } = useGameState()
+  const { gameState, nextEnergyIn, votes } = useGameState()
 
   return (
     <>
@@ -23,7 +23,17 @@ const DisplayPlayerData = () => {
               <Text>Next in: {nextEnergyIn}</Text>
             </VStack>
           </HStack>
-          <Text>Total Wood available: {Number(TOTAL_WOOD_AVAILABLE) - Number(totalWoodAvailable)}</Text>
+          {/* <Text>Total Wood available: {Number(TOTAL_WOOD_AVAILABLE) - Number(totalWoodAvailable)}</Text> */}
+          <Text>numba 0: {Number(votes![0])}</Text>
+          <Text>numba 1: {Number(votes![1])}</Text>
+          <Text>numba 2: {Number(votes![2])}</Text>
+          <Text>numba 3: {Number(votes![3])}</Text>
+          <Text>numba 4: {Number(votes![4])}</Text>
+          <Text>numba 5: {Number(votes![5])}</Text>
+          <Text>numba 6: {Number(votes![6])}</Text>
+          <Text>numba 7: {Number(votes![7])}</Text>
+          <Text>numba 8: {Number(votes![8])}</Text>
+          <Text>numba 9: {Number(votes![9])}</Text>
         </HStack>
       )}
     </>

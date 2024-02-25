@@ -7,6 +7,7 @@ import SessionKeyButton from "@/components/SessionKeyButton"
 import ChopTreeButton from "@/components/ChopTreeButton"
 import RequestAirdrop from "@/components/RequestAirdrop"
 import DisplayNfts from "@/components/DisplayNfts"
+import { BN } from "@coral-xyz/anchor"
 
 export default function Home() {
   const { publicKey } = useWallet()
@@ -23,7 +24,16 @@ export default function Home() {
         <DisplayGameState />
         <InitPlayerButton />
         <SessionKeyButton />
-        <ChopTreeButton />
+        <ChopTreeButton tree_idx={new BN(0)}/>
+        <ChopTreeButton tree_idx={new BN(1)}/>
+        <ChopTreeButton tree_idx={new BN(2)}/>
+        <ChopTreeButton tree_idx={new BN(3)}/>
+        <ChopTreeButton tree_idx={new BN(4)}/>
+        <ChopTreeButton tree_idx={new BN(5)}/>
+        <ChopTreeButton tree_idx={new BN(6)}/>
+        <ChopTreeButton tree_idx={new BN(7)}/>
+        <ChopTreeButton tree_idx={new BN(8)}/>
+        <ChopTreeButton tree_idx={new BN(9)}/>
         {/* <CreateElectionButton /> */}
         <RequestAirdrop />
         <DisplayNfts />
