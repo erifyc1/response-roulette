@@ -4,7 +4,8 @@ use crate::constants::MAX_WOOD_PER_TREE;
 
 #[account]
 pub struct GameData {
-    pub votes: [u64; 10]
+    pub votes: [u64; 10],
+    pub prompt_idx: u8
 }
 
 impl GameData {
@@ -24,6 +25,11 @@ impl GameData {
             }
         };
 
+        Ok(())
+    }
+
+    pub fn increment_prompt_idx(&mut self) -> Result<()> {
+        self.prompt_idx += 1;
         Ok(())
     }
 }

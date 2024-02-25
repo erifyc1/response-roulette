@@ -16,11 +16,13 @@ const GameStateContext = createContext<{
   gameState: PlayerData | null
   nextEnergyIn: number
   votes: BN[] | null
+  promptIdx: number
 }>({
   playerDataPDA: null,
   gameState: null,
   nextEnergyIn: 0,
-  votes: [new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)]
+  votes: [new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)],
+  promptIdx: 0
 })
 
 export const useGameState = () => useContext(GameStateContext)
@@ -40,6 +42,7 @@ export const GameStateProvider = ({
   const [gameDataPDA, setGameDataPDA] = useState<PublicKey | null>(null)
   const [gameData, setGameData] = useState<GameData | null>(null)
   const [votes, setVotes] = useState<BN[] | null>([new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0),new BN(0)])
+  const [promptIdx, setPromptIdx] = useState<number>(0);
 
   useEffect(() => {
     setPlayerState(null)
@@ -80,8 +83,9 @@ export const GameStateProvider = ({
     program.account.gameData
       .fetch(pda)
       .then((data) => {
-        setGameData(data)
+        setGameData(data);
         setVotes(data.votes);
+        setPromptIdx(data.promptIdx);
       })
       .catch((error) => {
         window.alert("No game data found, please init!")
@@ -91,6 +95,7 @@ export const GameStateProvider = ({
       const newGameData = program.coder.accounts.decode("gameData", account.data)
       setGameData(newGameData);
       setVotes(newGameData.votes);
+      setPromptIdx(newGameData.promptIdx);
     })
   }, [publicKey])
 
@@ -131,6 +136,7 @@ export const GameStateProvider = ({
         gameState: playerState,
         nextEnergyIn,
         votes,
+        promptIdx,
       }}
     >
       {children}

@@ -93,6 +93,10 @@ export type Lumberjack = {
                 10
               ]
             }
+          },
+          {
+            "name": "promptIdx",
+            "type": "u8"
           }
         ]
       }
@@ -250,6 +254,10 @@ export const IDL: Lumberjack = {
                 10
               ]
             }
+          },
+          {
+            "name": "promptIdx",
+            "type": "u8"
           }
         ]
       }
