@@ -26,14 +26,6 @@ export default function Home() {
         <SessionKeyButton />
         <ChopTreeButton tree_idx={new BN(0)}/>
         <ChopTreeButton tree_idx={new BN(1)}/>
-        <ChopTreeButton tree_idx={new BN(2)}/>
-        <ChopTreeButton tree_idx={new BN(3)}/>
-        <ChopTreeButton tree_idx={new BN(4)}/>
-        <ChopTreeButton tree_idx={new BN(5)}/>
-        <ChopTreeButton tree_idx={new BN(6)}/>
-        <ChopTreeButton tree_idx={new BN(7)}/>
-        <ChopTreeButton tree_idx={new BN(8)}/>
-        <ChopTreeButton tree_idx={new BN(9)}/>
         {/* <CreateElectionButton /> */}
         <RequestAirdrop />
         <DisplayNfts />
