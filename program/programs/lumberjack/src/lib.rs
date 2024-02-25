@@ -29,4 +29,8 @@ pub mod lumberjack {
     pub fn chop_tree(ctx: Context<ChopTree>, _level_seed: String, counter: u16, tree_idx: u64) -> Result<()> {
         chop_tree::chop_tree(ctx, counter, 1, tree_idx)
     }
+
+    pub fn increment_prompt_idx(ctx: Context<IncrementPromptIdx>) -> Result<()> {
+        increment_prompt_idx::increment_prompt_idx(ctx)
+    }
 }

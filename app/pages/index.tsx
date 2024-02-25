@@ -7,6 +7,7 @@ import ChopTreeButton from "@/components/ChopTreeButton"
 import RequestAirdrop from "@/components/RequestAirdrop"
 import { BN } from "@coral-xyz/anchor"
 import DisplayGameState from "@/components/DisplayGameState"
+import ChangePromptButton from "@/components/ChangePromptButton"
 // import DisplayNfts from "@/components/DisplayNfts"
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
       <Heading>Response Roulette</Heading>
         <Text>Some stuff here</Text>
         <Text>Some stuff here</Text>
+        <ChangePromptButton />
 
         <DisplayGameState />
         <Spacer height="1000px"/>

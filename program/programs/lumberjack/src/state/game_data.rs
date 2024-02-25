@@ -29,7 +29,15 @@ impl GameData {
     }
 
     pub fn increment_prompt_idx(&mut self) -> Result<()> {
-        self.prompt_idx += 1;
+        match self.prompt_idx.checked_add(1) {
+            Some(v) => {
+                msg!("tried add");
+                self.prompt_idx = v;
+            }
+            None => {
+                msg!("failed add");
+            }
+        };
         Ok(())
     }
 }

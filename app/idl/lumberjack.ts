@@ -77,6 +77,38 @@ export type Lumberjack = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "incrementPromptIdx",
+      "accounts": [
+        {
+          "name": "sessionToken",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -153,10 +185,7 @@ export type Lumberjack = {
       "name": "WrongAuthority",
       "msg": "Wrong Authority"
     }
-  ],
-  "metadata": {
-    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
-  }
+  ]
 };
 
 export const IDL: Lumberjack = {
@@ -238,6 +267,38 @@ export const IDL: Lumberjack = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "incrementPromptIdx",
+      "accounts": [
+        {
+          "name": "sessionToken",
+          "isMut": false,
+          "isSigner": false,
+          "isOptional": true
+        },
+        {
+          "name": "player",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "gameData",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "signer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -314,8 +375,5 @@ export const IDL: Lumberjack = {
       "name": "WrongAuthority",
       "msg": "Wrong Authority"
     }
-  ],
-  "metadata": {
-    "address": "4jcLhzcFDwdbHv613w51tr8b8wymmfG11jmZkSKrZugS"
-  }
+  ]
 };
