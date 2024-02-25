@@ -1,38 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+---
+title: RR_Devpost.md
+---
+![RR logo](https://i.imgur.com/IYwx3bN.png)
+Evan Coats, Vijay Shah, Jacob Stolker
+## Inspiration
 
-## Getting Started
+Taking inspiration from Kahoot, Jackbox, and Cards Against Humanity, Response Roulette is a simple online humor-focused social game using the Solana blockchain.
 
-First, run the development server:
+## What it does
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Users can access our game though a computer or mobile device and login using a Solana wallet chromium extension or app. While the first 10 players are joining, players enter a waiting room. Once all players have joined, the game starts. One at a time, a prompt is shown with a funny or thought-provoking question. Then, one random user and two random prompts are shown (one of which was the user's response) and players wager Solana on which response the chosen user typed. Players are rewarded for choosing correctly.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## How we built it
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Architecture overview
+Response Roulette Components
+1. `Smart Contract`: responsible for storing state and executing game logic. Written in Rust.
+2. `Web Client`: responsible for displaying game information to the end user. Written in TypeScript (with React).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Challenges we ran into
 
-To learn more about Next.js, take a look at the following resources:
+As this was our team's first experience developing on Solana, we encountered a bunch of problems that we had to overcome. Initially, we had trouble setting up all the necessary dependencies, wallet addresses, and configuration settings. Additionally, we struggled to implement new types of transactions, as we ran into multiple errors that were difficult to debug. Finally, we had trouble figuring out how to send and receive private information on the blockchain.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Accomplishments that we're proud of
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+* Ability to read & write to the blockchain!
+* Getting a working voting system with near-realtime global syncing.
+* Multi-lobby support for multiple simultaneous games
+* Improving our skills in blockchain development
 
-## Deploy on Vercel
+## What we learned
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* We learned the processes required to deploy a custom contract on Solana and interact with it using a web app.
+* We gained experience using new tools and frameworks together, such as Anchor.
+* We experimented with using the Solana-Unity SDK. (Though we did not end up using it.)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## What's next?
+
+* Variable bet amounts & multiple bet support
+* Custom prompt sets
+* Other game modes (quiz/trivia format)
+* Modularity, scalability
+
+![website page](https://i.imgur.com/LCnBe93.png)
+![2](https://i.imgur.com/gSL1EUz.png)
