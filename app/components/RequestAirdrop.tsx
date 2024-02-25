@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
-import { Button, Text } from "@chakra-ui/react"
+import { Button, HStack, SystemProps, Text, Image } from "@chakra-ui/react"
 import { LAMPORTS_PER_SOL } from "@solana/web3.js"
 import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 
-const RequestAirdrop = () => {
+const RequestAirdrop = (props: SystemProps) => {
   const { publicKey } = useWallet()
   const { connection } = useConnection()
   const [balance, setBalance] = useState<number>(0)
@@ -41,7 +41,10 @@ const RequestAirdrop = () => {
             Airdrop 1
           </Button>
         ) : (
-          <Text>Balance: {Number(balance).toFixed(3)}</Text>
+          <HStack>
+            <Image src="/solana.png" width="23px"></Image>
+            <Text>{Number(balance).toFixed(3)}</Text>
+          </HStack>
         ))}
     </>
   )

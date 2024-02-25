@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { useCallback, useState } from "react"
-import { Button, HStack, VStack } from "@chakra-ui/react"
+import { Button, HStack, VStack, Text } from "@chakra-ui/react"
 import { useConnection, useWallet } from "@solana/wallet-adapter-react"
 import { useSessionWallet } from "@magicblock-labs/gum-react-sdk"
 import { useGameState } from "@/contexts/GameStateProvider"
@@ -15,7 +15,7 @@ const ChopTreeButton = ({tree_idx} : UserProps) => {
   const { publicKey, sendTransaction } = useWallet()
   const { connection } = useConnection()
   const sessionWallet = useSessionWallet()
-  const { gameState, playerDataPDA } = useGameState()
+  const { gameState, playerDataPDA, votes } = useGameState()
   const [isLoadingSession, setIsLoadingSession] = useState(false)
   const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false)
   const [transactionCounter, setTransactionCounter] = useState(0)
@@ -82,25 +82,37 @@ const ChopTreeButton = ({tree_idx} : UserProps) => {
       {publicKey && gameState && (
         <VStack>
           {Number(tree_idx)}
-          <Image src="/Beaver.png" alt="Energy Icon" width={16} height={16} />
-          <HStack>
-            {sessionWallet && sessionWallet.sessionToken != null && (
-              <Button
+          {/* <Image src="/Beaver.png" alt="" width={16} height={16} /> */}
+          <VStack>
+            <HStack>
+              {Number(tree_idx) == 0 && sessionWallet && sessionWallet.sessionToken != null && (
+                <Button
                 isLoading={isLoadingSession}
                 onClick={onChopClick}
-                width="175px"
-              >
-                Chop tree Session
-              </Button>
-            )}
-            <Button
-              isLoading={isLoadingMainWallet}
-              onClick={onChopMainWalletClick}
-              width="175px"
-            >
-              Chop tree MainWallet
-            </Button>
-          </HStack>
+                width="4em"
+                height="2.5em"
+                fontSize="9xl"
+                backgroundColor="indianred"
+                >
+                {Number(tree_idx) == 0 ? 'A' : 'B'}
+                </Button>
+              )}
+              {Number(tree_idx) == 1 && sessionWallet && sessionWallet.sessionToken != null && (
+                <Button
+                isLoading={isLoadingSession}
+                onClick={onChopClick}
+                width="4em"
+                height="2.5em"
+                fontSize="9xl"
+                backgroundColor="deepskyblue"
+                >
+                {Number(tree_idx) == 0 ? 'A' : 'B'}
+                </Button>
+              )}
+
+            </HStack>
+            <Text fontSize="larger">{Number(votes![Number(tree_idx)])} Votes</Text>
+          </VStack>
         </VStack>
       )}
     </>
