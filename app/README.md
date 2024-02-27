@@ -1,7 +1,6 @@
----
-title: RR_Devpost.md
----
+
 ![RR logo](https://i.imgur.com/IYwx3bN.png)
+
 Evan Coats, Vijay Shah, Jacob Stolker
 ## Inspiration
 
